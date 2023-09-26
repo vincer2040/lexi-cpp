@@ -13,33 +13,36 @@ Lexer::Lexer(std::uint8_t* input, std::size_t input_len) {
 }
 
 Token Lexer::next_token(void) {
-    Token tok = { TokenT::Illegal, std::monostate() };
+    Token tok = {TokenT::Illegal, std::monostate()};
     switch (this->ch) {
-        case '$':
-            tok.type = TokenT::BulkType;
-            break;
-        case '\r':
-            tok.type = TokenT::Retcar;
-            break;
-        case '\n':
-            tok.type = TokenT::NewL;
-            break;
-        case 0:
-            tok.type = TokenT::Eof;
-        default:
-            if (is_letter(this->ch)) {
-                std::string value = this->read_string();
-                tok.literal = value;
-                tok.type = TokenT::Bulk;
-                return tok;
-            } else if (is_digit(this->ch)) {
-                std::string len = this->read_len();
-                tok.literal = len;
-                tok.type = TokenT::Len;
-                return tok;
-            } else {
-                return tok;
-            }
+    case '*':
+        tok.type = TokenT::ArrayType;
+        break;
+    case '$':
+        tok.type = TokenT::BulkType;
+        break;
+    case '\r':
+        tok.type = TokenT::Retcar;
+        break;
+    case '\n':
+        tok.type = TokenT::NewL;
+        break;
+    case 0:
+        tok.type = TokenT::Eof;
+    default:
+        if (is_letter(this->ch)) {
+            std::string value = this->read_string();
+            tok.literal = value;
+            tok.type = TokenT::Bulk;
+            return tok;
+        } else if (is_digit(this->ch)) {
+            std::string len = this->read_len();
+            tok.literal = len;
+            tok.type = TokenT::Len;
+            return tok;
+        } else {
+            return tok;
+        }
     }
 
     this->read_char();
@@ -74,9 +77,7 @@ void Lexer::read_char(void) {
     this->pos += 1;
 }
 
-static bool is_digit(std::uint8_t ch) {
-    return '0' <= ch && ch <= '9';
-}
+static bool is_digit(std::uint8_t ch) { return '0' <= ch && ch <= '9'; }
 
 static bool is_letter(std::uint8_t ch) {
     return ('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z');
