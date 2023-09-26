@@ -12,10 +12,23 @@ add_executable(
    lexer_test.cc
 )
 
+add_executable(
+    parser_test
+    parser_test.cc
+)
+
 target_link_libraries(
     lexer_test
     GTest::gtest_main
     lexi
 )
+
+target_link_libraries(
+    parser_test
+    GTest::gtest_main
+    lexi
+)
+
 include(GoogleTest)
 gtest_discover_tests(lexer_test)
+gtest_discover_tests(parser_test)
