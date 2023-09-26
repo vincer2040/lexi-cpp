@@ -17,4 +17,5 @@ class Lexer {
     void read_char(void);
     std::string read_len(void);
     std::string read_string(void);
+    std::vector<std::uint8_t> read_int(void);
 };

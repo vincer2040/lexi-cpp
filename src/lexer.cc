@@ -28,7 +28,15 @@ Token Lexer::next_token(void) {
         tok.literal = simple;
         tok.type = TokenT::Simple;
         return tok;
-    };
+    }
+    case ':': {
+        std::vector<uint8_t> integer;
+        this->read_char();
+        integer = this->read_int();
+        tok.literal = integer;
+        tok.type = TokenT::Int;
+        return tok;
+    }
     case '\r':
         tok.type = TokenT::Retcar;
         break;
@@ -74,6 +82,15 @@ std::string Lexer::read_len(void) {
         this->read_char();
     }
     return s;
+}
+
+std::vector<std::uint8_t> Lexer::read_int(void) {
+    std::vector<std::uint8_t> res;
+    while (this->ch != '\r') {
+        res.push_back(this->ch);
+        this->read_char();
+    }
+    return res;
 }
 
 void Lexer::read_char(void) {
