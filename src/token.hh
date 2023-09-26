@@ -4,6 +4,7 @@
 #include <string>
 #include <variant>
 #include <vector>
+
 enum class TokenT {
     BulkType,
     ArrayType,
