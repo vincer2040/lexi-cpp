@@ -34,6 +34,32 @@ LexiType Parser::parse() {
         res.data = s;
         this->next_token();
     } break;
+    case TokenT::Int: {
+        std::uint64_t tmp = 0;
+        std::int64_t data;
+        std::size_t i;
+        std::uint8_t shift = 56;
+        std::vector<std::uint8_t> literal;
+        literal = std::get<std::vector<std::uint8_t>>(this->cur.literal);
+        for (i = 0; i < 8; ++i, shift -= 8) {
+            uint8_t at = literal[i];
+            tmp |= (std::uint64_t)(at << shift);
+        }
+        if (tmp <= 0x7fffffffffffffffu) {
+            data = tmp;
+        } else {
+            data = -1 - (long long int)(0xffffffffffffffffu - tmp);
+        }
+        if (!this->expect_peek(TokenT::Retcar)) {
+            return res;
+        }
+        if (!this->expect_peek(TokenT::NewL)) {
+            return res;
+        }
+        res.type = LexiTypeT::Int;
+        res.data = data;
+        this->next_token();
+    } break;
     default:
         break;
     }
