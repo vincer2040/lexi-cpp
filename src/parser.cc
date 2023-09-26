@@ -1,5 +1,6 @@
 #include "parser.hh"
 #include "lexitype.hh"
+#include <string>
 #include <variant>
 
 Parser::Parser(Lexer& l) : l(l) {
@@ -59,6 +60,32 @@ LexiType Parser::parse() {
         res.type = LexiTypeT::Int;
         res.data = data;
         this->next_token();
+    } break;
+    case TokenT::ArrayType: {
+        if (!this->expect_peek(TokenT::Len)) {
+            return res;
+        }
+        std::string s_len = std::get<std::string>(this->cur.literal);
+        std::size_t i, len = std::stoull(s_len);
+        if (!this->expect_peek(TokenT::Retcar)) {
+            return res;
+        }
+        if (!this->expect_peek(TokenT::NewL)) {
+            return res;
+        }
+        this->next_token();
+
+        std::vector<LexiType> data;
+
+        data.reserve(len);
+
+        for (i = 0; i < len; ++i) {
+            LexiType at = this->parse();
+            data.push_back(at);
+        }
+
+        res.type = LexiTypeT::Array;
+        res.data = data;
     } break;
     default:
         break;

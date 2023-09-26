@@ -35,3 +35,31 @@ TEST(Parser, Integers) {
     EXPECT_EQ(data, 42069);
     free(out);
 }
+
+TEST(Parser, Arrays) {
+    std::uint8_t* input =
+        (std::uint8_t*)"*2\r\n$5\r\nvince\r\n$7\r\nis cool\r\n";
+    std::size_t input_len = strlen((char*)input);
+    Lexer l = Lexer(input, input_len);
+    Parser p = Parser(l);
+    LexiType res = p.parse();
+    EXPECT_EQ(res.type, LexiTypeT::Array);
+    EXPECT_EQ(std::holds_alternative<std::vector<LexiType>>(res.data), true);
+    std::vector<LexiType> got = std::get<std::vector<LexiType>>(res.data);
+    EXPECT_EQ(got.size(), 2);
+
+    LexiType first = got[0];
+    LexiType second = got[1];
+
+    EXPECT_EQ(first.type, LexiTypeT::Bulk);
+    EXPECT_EQ(second.type, LexiTypeT::Bulk);
+
+    EXPECT_EQ(std::holds_alternative<std::string>(first.data), true);
+    EXPECT_EQ(std::holds_alternative<std::string>(second.data), true);
+
+    std::string s1 = std::get<std::string>(first.data);
+    std::string s2 = std::get<std::string>(second.data);
+
+    EXPECT_EQ(s1, "vince");
+    EXPECT_EQ(s2, "is cool");
+}
