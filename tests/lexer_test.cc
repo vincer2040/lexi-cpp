@@ -147,3 +147,28 @@ TEST(Lexer, Integers) {
 
     free(out);
 }
+
+TEST(Lexer, Errors) {
+    std::uint8_t* input = (std::uint8_t*)"-Error\r\n";
+    Token exps[] = {
+        {TokenT::Err, "Error"},
+        {TokenT::Retcar, std::monostate()},
+        {TokenT::NewL, std::monostate()},
+        {TokenT::Eof, std::monostate()},
+    };
+    std::size_t i, len = sizeof(exps) / sizeof(exps[0]);
+    Lexer l = Lexer(input, strlen((char*)input));
+    for (i = 0; i < len; ++i) {
+        Token exp = exps[i];
+        Token got = l.next_token();
+        EXPECT_EQ(exp.type, got.type);
+        if (exp.type == TokenT::Err) {
+            std::string exp_err;
+            std::string got_err;
+            EXPECT_EQ(std::holds_alternative<std::string>(got.literal), true);
+            exp_err = std::get<std::string>(exp.literal);
+            got_err = std::get<std::string>(got.literal);
+            EXPECT_EQ(exp_err, got_err);
+        }
+    }
+}

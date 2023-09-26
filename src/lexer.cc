@@ -37,6 +37,14 @@ Token Lexer::next_token(void) {
         tok.type = TokenT::Int;
         return tok;
     }
+    case '-': {
+        std::string s;
+        this->read_char();
+        s = this->read_string();
+        tok.type = TokenT::Err;
+        tok.literal = s;
+        return tok;
+    }
     case '\r':
         tok.type = TokenT::Retcar;
         break;
