@@ -69,3 +69,30 @@ TEST(Lexer, Arrays) {
         }
     }
 }
+
+TEST(Lexer, SimpleStrings) {
+    std::uint8_t* input = (std::uint8_t*)"+PONG\r\n";
+    Lexer l = Lexer(input, strlen((char*)input));
+    Token exps[] = {
+        {TokenT::Simple, "PONG"},
+        {TokenT::Retcar, std::monostate()},
+        {TokenT::NewL, std::monostate()},
+        {TokenT::Eof, std::monostate()},
+    };
+    std::size_t i, len = sizeof(exps) / sizeof(exps[0]);
+
+    for (i = 0; i < len; ++i) {
+        Token exp = exps[i];
+        Token got = l.next_token();
+        EXPECT_EQ(exp.type, got.type);
+        if (exp.type == TokenT::Simple) {
+            EXPECT_EQ(std::holds_alternative<std::string>(exp.literal), true);
+            std::string exp_val = std::get<std::string>(exp.literal);
+            std::string got_val = std::get<std::string>(got.literal);
+            EXPECT_EQ(exp_val, got_val);
+        } else {
+            EXPECT_EQ(std::holds_alternative<std::monostate>(exp.literal),
+                      true);
+        }
+    }
+}

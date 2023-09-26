@@ -21,6 +21,14 @@ Token Lexer::next_token(void) {
     case '$':
         tok.type = TokenT::BulkType;
         break;
+    case '+': {
+        std::string simple;
+        this->read_char();
+        simple = this->read_string();
+        tok.literal = simple;
+        tok.type = TokenT::Simple;
+        return tok;
+    };
     case '\r':
         tok.type = TokenT::Retcar;
         break;
