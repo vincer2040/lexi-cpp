@@ -1,4 +1,5 @@
 #include "builder.hh"
+#include <iostream>
 #include <stdlib.h>
 #include <memory.h>
 #include <string>
@@ -17,6 +18,17 @@ std::uint8_t* Builder::out() {
 
 const std::size_t Builder::length() {
     return this->ins;
+}
+
+void Builder::reset(void) {
+    memset(this->buf, 0, this->cap);
+    this->ins = 0;
+}
+
+void Builder::free_buf(void) {
+    if (this->buf) {
+        free(this->buf);
+    }
 }
 
 int Builder::add_arr(std::size_t len) {
