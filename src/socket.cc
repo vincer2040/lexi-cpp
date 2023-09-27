@@ -31,7 +31,6 @@ ssize_t Socket::send(std::uint8_t* send_buf, std::size_t send_len) {
 }
 
 std::tuple<std::uint8_t*, ssize_t> Socket::receive(void) {
-    ssize_t cur = -1;
     size_t pos = 0;
     if (!this->read_buf) {
         if (this->allocate_read_buf() == -1) {
@@ -45,7 +44,7 @@ std::tuple<std::uint8_t*, ssize_t> Socket::receive(void) {
         ssize_t read_amt =
             read(this->fd, this->read_buf + pos, this->read_buf_cap);
         if (read_amt == -1) {
-            cur = read_amt;
+            return std::make_tuple(nullptr, -1);
             break;
         }
         pos += read_amt;

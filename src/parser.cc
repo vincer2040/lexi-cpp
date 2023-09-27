@@ -87,6 +87,18 @@ LexiType Parser::parse() {
         res.type = LexiTypeT::Array;
         res.data = data;
     } break;
+    case TokenT::Simple: {
+        std::string s = std::get<std::string>(this->cur.literal);
+        if (!this->expect_peek(TokenT::Retcar)) {
+            return res;
+        }
+        if (!this->expect_peek(TokenT::NewL)) {
+            return res;
+        }
+        this->next_token();
+        res.type = LexiTypeT::Simple;
+        res.data = s;
+    } break;
     default:
         break;
     }
