@@ -22,7 +22,7 @@ void print(LexiType& res) {
 }
 
 int main() {
-    Lexi lexi = Lexi("127.0.0.1", 6969);
+    Lexi lexi("127.0.0.1", 6969);
     LexiType res;
     lexi.connect();
 
@@ -39,6 +39,18 @@ int main() {
     print(res);
 
     res = lexi.del("vince");
+    print(res);
+
+    res = lexi.push("is cool");
+    print(res);
+
+    res = lexi.push("vince");
+    print(res);
+
+    res = lexi.pop();
+    print(res);
+
+    res = lexi.pop();
     print(res);
 
     res = lexi.cluster_new("fam");
