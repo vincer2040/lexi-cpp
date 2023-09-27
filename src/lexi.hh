@@ -14,6 +14,7 @@ class Lexi {
     LexiType set(std::string key, std::string data);
     LexiType set(std::string key, std::int64_t data);
     LexiType get(std::string key);
+    LexiType del(std::string key);
     ~Lexi(void);
 
   private:
