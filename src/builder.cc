@@ -1,7 +1,7 @@
 #include "builder.hh"
 #include <iostream>
-#include <stdlib.h>
 #include <memory.h>
+#include <stdlib.h>
 #include <string>
 
 #define BUILDER_INITIAL_CAP 32
@@ -9,16 +9,13 @@
 Builder::Builder(void) {
     this->ins = 0;
     this->cap = BUILDER_INITIAL_CAP;
-    this->buf = (std::uint8_t*)calloc(BUILDER_INITIAL_CAP, sizeof(std::uint8_t));
+    this->buf =
+        (std::uint8_t*)calloc(BUILDER_INITIAL_CAP, sizeof(std::uint8_t));
 }
 
-std::uint8_t* Builder::out() {
-    return this->buf;
-}
+std::uint8_t* Builder::out() { return this->buf; }
 
-const std::size_t Builder::length() {
-    return this->ins;
-}
+const std::size_t Builder::length() { return this->ins; }
 
 void Builder::reset(void) {
     memset(this->buf, 0, this->cap);
@@ -81,6 +78,23 @@ int Builder::add_int(std::int64_t integer) {
     }
 
     this->add_end();
+    return 0;
+}
+
+int Builder::add_ping(void) {
+    std::size_t needed_len = 7;
+    if (needed_len >= this->cap) {
+        if (this->realloc_buf(needed_len) != 0) {
+            return -1;
+        }
+    }
+    this->add_byte('+');
+    this->add_byte('P');
+    this->add_byte('I');
+    this->add_byte('N');
+    this->add_byte('G');
+    this->add_byte('\r');
+    this->add_byte('\n');
     return 0;
 }
 
