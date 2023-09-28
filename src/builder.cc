@@ -18,7 +18,7 @@ std::uint8_t* Builder::out() { return this->buf; }
 const std::size_t Builder::length() { return this->ins; }
 
 void Builder::reset(void) {
-    memset(this->buf, 0, this->cap);
+    memset(this->buf, 0, this->ins);
     this->ins = 0;
 }
 
