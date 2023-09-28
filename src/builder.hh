@@ -6,7 +6,7 @@
 class Builder {
   public:
     Builder(void);
-    int add_string(std::string str);
+    int add_string(const std::string& str);
     int add_int(std::int64_t integer);
     int add_arr(std::size_t len);
     int add_ping(void);

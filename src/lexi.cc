@@ -36,7 +36,7 @@ LexiType Lexi::ping(void) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::set(std::string key, std::string data) {
+LexiType Lexi::set(const std::string& key, const std::string& data) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -66,7 +66,7 @@ LexiType Lexi::set(std::string key, std::string data) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::set(std::string key, std::int64_t data) {
+LexiType Lexi::set(const std::string& key, std::int64_t data) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -96,7 +96,7 @@ LexiType Lexi::set(std::string key, std::int64_t data) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::get(std::string key) {
+LexiType Lexi::get(const std::string& key) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -125,7 +125,7 @@ LexiType Lexi::get(std::string key) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::del(std::string key) {
+LexiType Lexi::del(const std::string& key) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -154,7 +154,7 @@ LexiType Lexi::del(std::string key) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::push(std::string data) {
+LexiType Lexi::push(const std::string& data) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -239,7 +239,7 @@ LexiType Lexi::pop(void) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::cluster_new(std::string cluster_name) {
+LexiType Lexi::cluster_new(const std::string& cluster_name) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -268,8 +268,8 @@ LexiType Lexi::cluster_new(std::string cluster_name) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::cluster_set(std::string cluster_name, std::string key,
-                           std::string data) {
+LexiType Lexi::cluster_set(const std::string& cluster_name,
+                           const std::string& key, const std::string& data) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -300,8 +300,8 @@ LexiType Lexi::cluster_set(std::string cluster_name, std::string key,
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::cluster_set(std::string cluster_name, std::string key,
-                           std::int64_t data) {
+LexiType Lexi::cluster_set(const std::string& cluster_name,
+                           const std::string& key, std::int64_t data) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -332,7 +332,8 @@ LexiType Lexi::cluster_set(std::string cluster_name, std::string key,
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::cluster_get(std::string cluster_name, std::string key) {
+LexiType Lexi::cluster_get(const std::string& cluster_name,
+                           const std::string& key) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -362,7 +363,8 @@ LexiType Lexi::cluster_get(std::string cluster_name, std::string key) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::cluster_del(std::string cluster_name, std::string key) {
+LexiType Lexi::cluster_del(const std::string& cluster_name,
+                           const std::string& key) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -392,7 +394,8 @@ LexiType Lexi::cluster_del(std::string cluster_name, std::string key) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::cluster_push(std::string cluster_name, std::string data) {
+LexiType Lexi::cluster_push(const std::string& cluster_name,
+                            const std::string& data) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -422,7 +425,8 @@ LexiType Lexi::cluster_push(std::string cluster_name, std::string data) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::cluster_push(std::string cluster_name, std::int64_t data) {
+LexiType Lexi::cluster_push(const std::string& cluster_name,
+                            std::int64_t data) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -452,7 +456,7 @@ LexiType Lexi::cluster_push(std::string cluster_name, std::int64_t data) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::cluster_pop(std::string cluster_name) {
+LexiType Lexi::cluster_pop(const std::string& cluster_name) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;
@@ -481,7 +485,7 @@ LexiType Lexi::cluster_pop(std::string cluster_name) {
     return this->parse(read_buf, read_len);
 }
 
-LexiType Lexi::cluster_drop(std::string cluster_name) {
+LexiType Lexi::cluster_drop(const std::string& cluster_name) {
     std::uint8_t* buf;
     std::size_t buf_len;
     ssize_t send_res;

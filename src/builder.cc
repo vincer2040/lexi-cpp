@@ -42,7 +42,7 @@ int Builder::add_arr(std::size_t len) {
     return 0;
 }
 
-int Builder::add_string(std::string s) {
+int Builder::add_string(const std::string& s) {
     std::size_t s_len = s.length();
     std::string len_to_string = std::to_string(s_len);
     std::size_t needed_len = this->ins + len_to_string.length() + s_len + 5;
