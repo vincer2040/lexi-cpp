@@ -4,7 +4,7 @@
 #include "parser.hh"
 #include <variant>
 
-Lexi::Lexi(std::string addr_str, std::uint16_t port)
+Lexi::Lexi(const std::string& addr_str, std::uint16_t port)
     : sock(Socket(addr_str, port)) {}
 
 Lexi::Lexi(const char* addr_str, std::uint16_t port)

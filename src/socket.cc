@@ -9,7 +9,7 @@
 static std::uint32_t parse_addr(std::string addr_str);
 static std::uint32_t parse_addr(const char* addr_str, std::size_t len);
 
-Socket::Socket(std::string addr_str, std::uint16_t port) {
+Socket::Socket(const std::string& addr_str, std::uint16_t port) {
     this->addr = parse_addr(addr_str);
     this->port = port;
     this->read_buf = NULL;
