@@ -19,3 +19,7 @@ add_library(lexi src/lexer.cc src/parser.cc src/builder.cc src/socket.cc src/lex
 add_executable(example example/main.cc)
 
 target_link_libraries(example lexi)
+
+install(FILES build/liblexi.a DESTINATION "${INSTALL_PREFIX}/lib")
+install(FILES src/lexi.h DESTINATION "${INSTALL_PREFIX}/include")
+
