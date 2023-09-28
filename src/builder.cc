@@ -1,4 +1,5 @@
 #include "builder.hh"
+#include <cstring>
 #include <iostream>
 #include <memory.h>
 #include <stdlib.h>
@@ -38,6 +39,26 @@ int Builder::add_arr(std::size_t len) {
     }
     this->add_byte('*');
     this->add_len(len_to_string);
+    this->add_end();
+    return 0;
+}
+
+int Builder::add_string(const char* str) {
+    std::size_t i, s_len = strlen(str);
+    std::string len_to_string = std::to_string(s_len);
+    std::size_t needed_len = this->ins + len_to_string.length() + s_len + 5;
+    if (needed_len >= this->cap) {
+        if (this->realloc_buf(needed_len) != 0) {
+            return -1;
+        }
+    }
+    this->add_byte('$');
+    this->add_len(len_to_string);
+    this->add_end();
+    for (i = 0; i < s_len; ++i) {
+        char c = str[i];
+        this->add_byte(c);
+    }
     this->add_end();
     return 0;
 }
