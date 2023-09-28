@@ -102,6 +102,19 @@ LexiType Parser::parse() {
         res.type = LexiTypeT::Simple;
         res.data = s;
     } break;
+    case TokenT::Err: {
+        std::shared_ptr<std::string> s =
+            std::get<std::shared_ptr<std::string>>(this->cur.literal);
+        if (!this->expect_peek(TokenT::Retcar)) {
+            return res;
+        }
+        if (!this->expect_peek(TokenT::NewL)) {
+            return res;
+        }
+        this->next_token();
+        res.type = LexiTypeT::Err;
+        res.data = s;
+    } break;
     default:
         break;
     }
