@@ -28,8 +28,8 @@ $ mkdir build && cd build
 from within the build directory: 
 
 ```console
-cmake -DCMAKE_BUILD_TYPE=Release ..
-make
+$ cmake -DCMAKE_BUILD_TYPE=Release ..
+$ make
 ```
 
 4. Run tests (optional)
@@ -37,7 +37,7 @@ make
 from within the build directory:
 
 ```console
-make test
+$ make test
 ```
 
 5. install
