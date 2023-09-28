@@ -7,12 +7,12 @@ void print(LexiType& res) {
     case LexiTypeT::Simple: {
         std::shared_ptr<std::string> simple =
             std::get<std::shared_ptr<std::string>>(res.data);
-        std::cout << simple << "\n";
+        std::cout << *simple << "\n";
     } break;
     case LexiTypeT::Bulk: {
         std::shared_ptr<std::string> bulk =
             std::get<std::shared_ptr<std::string>>(res.data);
-        std::cout << bulk << "\n";
+        std::cout << *bulk << "\n";
     } break;
     case LexiTypeT::Int: {
         std::int64_t integer = std::get<std::int64_t>(res.data);
