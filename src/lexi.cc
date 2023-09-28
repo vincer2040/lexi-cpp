@@ -242,6 +242,87 @@ LexiType Lexi::pop(void) {
     return this->parse(read_buf, read_len);
 }
 
+LexiType Lexi::keys(void) {
+    std::uint8_t* buf;
+    std::size_t buf_len;
+    ssize_t send_res;
+    std::tuple<std::uint8_t*, ssize_t> read_res;
+    std::uint8_t* read_buf;
+    ssize_t read_len;
+    this->builder.reset();
+    this->builder.add_string("KEYS");
+    buf = this->builder.out();
+    buf_len = this->builder.length();
+    send_res = this->sock.send(buf, buf_len);
+    if (send_res == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    read_res = this->sock.receive();
+    read_buf = std::get<0>(read_res);
+    read_len = std::get<1>(read_res);
+    if (read_buf == nullptr) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    if (read_len == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    return this->parse(read_buf, read_len);
+}
+
+LexiType Lexi::values(void) {
+    std::uint8_t* buf;
+    std::size_t buf_len;
+    ssize_t send_res;
+    std::tuple<std::uint8_t*, ssize_t> read_res;
+    std::uint8_t* read_buf;
+    ssize_t read_len;
+    this->builder.reset();
+    this->builder.add_string("VALUES");
+    buf = this->builder.out();
+    buf_len = this->builder.length();
+    send_res = this->sock.send(buf, buf_len);
+    if (send_res == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    read_res = this->sock.receive();
+    read_buf = std::get<0>(read_res);
+    read_len = std::get<1>(read_res);
+    if (read_buf == nullptr) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    if (read_len == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    return this->parse(read_buf, read_len);
+}
+
+LexiType Lexi::entries(void) {
+    std::uint8_t* buf;
+    std::size_t buf_len;
+    ssize_t send_res;
+    std::tuple<std::uint8_t*, ssize_t> read_res;
+    std::uint8_t* read_buf;
+    ssize_t read_len;
+    this->builder.reset();
+    this->builder.add_string("ENTRIES");
+    buf = this->builder.out();
+    buf_len = this->builder.length();
+    send_res = this->sock.send(buf, buf_len);
+    if (send_res == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    read_res = this->sock.receive();
+    read_buf = std::get<0>(read_res);
+    read_len = std::get<1>(read_res);
+    if (read_buf == nullptr) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    if (read_len == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    return this->parse(read_buf, read_len);
+}
+
 LexiType Lexi::cluster_new(const std::string& cluster_name) {
     std::uint8_t* buf;
     std::size_t buf_len;
@@ -469,6 +550,92 @@ LexiType Lexi::cluster_pop(const std::string& cluster_name) {
     this->builder.reset();
     this->builder.add_arr(2);
     this->builder.add_string("CLUSTER.POP");
+    this->builder.add_string(cluster_name);
+    buf = this->builder.out();
+    buf_len = this->builder.length();
+    send_res = this->sock.send(buf, buf_len);
+    if (send_res == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    read_res = this->sock.receive();
+    read_buf = std::get<0>(read_res);
+    read_len = std::get<1>(read_res);
+    if (read_buf == nullptr) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    if (read_len == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    return this->parse(read_buf, read_len);
+}
+LexiType Lexi::cluster_keys(const std::string& cluster_name) {
+    std::uint8_t* buf;
+    std::size_t buf_len;
+    ssize_t send_res;
+    std::tuple<std::uint8_t*, ssize_t> read_res;
+    std::uint8_t* read_buf;
+    ssize_t read_len;
+    this->builder.reset();
+    this->builder.add_arr(2);
+    this->builder.add_string("CLUSTER.KEYS");
+    this->builder.add_string(cluster_name);
+    buf = this->builder.out();
+    buf_len = this->builder.length();
+    send_res = this->sock.send(buf, buf_len);
+    if (send_res == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    read_res = this->sock.receive();
+    read_buf = std::get<0>(read_res);
+    read_len = std::get<1>(read_res);
+    if (read_buf == nullptr) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    if (read_len == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    return this->parse(read_buf, read_len);
+}
+
+LexiType Lexi::cluster_values(const std::string& cluster_name) {
+    std::uint8_t* buf;
+    std::size_t buf_len;
+    ssize_t send_res;
+    std::tuple<std::uint8_t*, ssize_t> read_res;
+    std::uint8_t* read_buf;
+    ssize_t read_len;
+    this->builder.reset();
+    this->builder.add_arr(2);
+    this->builder.add_string("CLUSTER.VALUES");
+    this->builder.add_string(cluster_name);
+    buf = this->builder.out();
+    buf_len = this->builder.length();
+    send_res = this->sock.send(buf, buf_len);
+    if (send_res == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    read_res = this->sock.receive();
+    read_buf = std::get<0>(read_res);
+    read_len = std::get<1>(read_res);
+    if (read_buf == nullptr) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    if (read_len == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    return this->parse(read_buf, read_len);
+}
+
+LexiType Lexi::cluster_entries(const std::string& cluster_name) {
+    std::uint8_t* buf;
+    std::size_t buf_len;
+    ssize_t send_res;
+    std::tuple<std::uint8_t*, ssize_t> read_res;
+    std::uint8_t* read_buf;
+    ssize_t read_len;
+    this->builder.reset();
+    this->builder.add_arr(2);
+    this->builder.add_string("CLUSTER.ENTRIES");
     this->builder.add_string(cluster_name);
     buf = this->builder.out();
     buf_len = this->builder.length();

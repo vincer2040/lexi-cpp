@@ -19,6 +19,9 @@ class Lexi {
     LexiType push(const std::string& data);
     LexiType push(std::int64_t data);
     LexiType pop(void);
+    LexiType keys(void);
+    LexiType values(void);
+    LexiType entries(void);
     LexiType cluster_new(const std::string& cluster_name);
     LexiType cluster_set(const std::string& cluster_name,
                          const std::string& key, const std::string& data);
@@ -32,6 +35,9 @@ class Lexi {
                           const std::string& data);
     LexiType cluster_push(const std::string& cluster_name, std::int64_t data);
     LexiType cluster_pop(const std::string& cluster_name);
+    LexiType cluster_keys(const std::string& cluster_name);
+    LexiType cluster_values(const std::string& cluster_name);
+    LexiType cluster_entries(const std::string& cluster_name);
     LexiType cluster_drop(const std::string& cluster_name);
     ~Lexi(void);
 
