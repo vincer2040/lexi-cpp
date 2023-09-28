@@ -25,6 +25,9 @@ class Lexi {
                          std::int64_t value);
     LexiType cluster_get(std::string cluster_name, std::string key);
     LexiType cluster_del(std::string cluster_name, std::string key);
+    LexiType cluster_push(std::string cluster_name, std::string data);
+    LexiType cluster_push(std::string cluster_name, std::int64_t data);
+    LexiType cluster_pop(std::string cluster_name);
     LexiType cluster_drop(std::string cluster_name);
     ~Lexi(void);
 

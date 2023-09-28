@@ -2,7 +2,7 @@
 #include <iostream>
 #include <memory>
 
-void print(LexiType& res) {
+void print(const LexiType& res) {
     switch (res.type) {
     case LexiTypeT::Simple: {
         std::shared_ptr<std::string> simple =
@@ -72,6 +72,24 @@ int main() {
     print(res);
 
     res = lexi.cluster_del("fam", "vince");
+    print(res);
+
+    res = lexi.cluster_push("fam", "is cool");
+    print(res);
+
+    res = lexi.cluster_push("fam", "vince");
+    print(res);
+
+    res = lexi.cluster_push("fam", 42069);
+    print(res);
+
+    res = lexi.cluster_pop("fam");
+    print(res);
+
+    res = lexi.cluster_pop("fam");
+    print(res);
+
+    res = lexi.cluster_pop("fam");
     print(res);
 
     res = lexi.cluster_drop("fam");
