@@ -33,9 +33,7 @@ LexiType Lexi::ping(void) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::set(std::string key, std::string data) {
@@ -65,9 +63,7 @@ LexiType Lexi::set(std::string key, std::string data) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::set(std::string key, std::int64_t data) {
@@ -97,9 +93,7 @@ LexiType Lexi::set(std::string key, std::int64_t data) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::get(std::string key) {
@@ -128,9 +122,7 @@ LexiType Lexi::get(std::string key) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::del(std::string key) {
@@ -159,9 +151,7 @@ LexiType Lexi::del(std::string key) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::push(std::string data) {
@@ -190,9 +180,7 @@ LexiType Lexi::push(std::string data) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::push(std::int64_t data) {
@@ -221,9 +209,7 @@ LexiType Lexi::push(std::int64_t data) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::pop(void) {
@@ -250,9 +236,7 @@ LexiType Lexi::pop(void) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::cluster_new(std::string cluster_name) {
@@ -281,9 +265,7 @@ LexiType Lexi::cluster_new(std::string cluster_name) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::cluster_set(std::string cluster_name, std::string key,
@@ -315,9 +297,7 @@ LexiType Lexi::cluster_set(std::string cluster_name, std::string key,
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::cluster_set(std::string cluster_name, std::string key,
@@ -349,9 +329,7 @@ LexiType Lexi::cluster_set(std::string cluster_name, std::string key,
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::cluster_get(std::string cluster_name, std::string key) {
@@ -381,9 +359,7 @@ LexiType Lexi::cluster_get(std::string cluster_name, std::string key) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::cluster_del(std::string cluster_name, std::string key) {
@@ -413,9 +389,7 @@ LexiType Lexi::cluster_del(std::string cluster_name, std::string key) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
-    return p.parse();
+    return this->parse(read_buf, read_len);
 }
 
 LexiType Lexi::cluster_drop(std::string cluster_name) {
@@ -444,8 +418,12 @@ LexiType Lexi::cluster_drop(std::string cluster_name) {
     if (read_len == -1) {
         return {LexiTypeT::Err, std::monostate()};
     }
-    Lexer l = Lexer(read_buf, read_len);
-    Parser p = Parser(l);
+    return this->parse(read_buf, read_len);
+}
+
+LexiType Lexi::parse(std::uint8_t* read_buf, std::size_t read_buf_len) {
+    Lexer l(read_buf, read_buf_len);
+    Parser p(l);
     return p.parse();
 }
 

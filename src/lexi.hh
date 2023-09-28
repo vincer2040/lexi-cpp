@@ -31,4 +31,5 @@ class Lexi {
   private:
     Builder builder;
     Socket sock;
+    LexiType parse(std::uint8_t* read_buf, std::size_t read_buf_len);
 };
