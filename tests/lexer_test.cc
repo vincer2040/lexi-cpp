@@ -10,10 +10,10 @@ TEST(Lexer, BulkStrings) {
     Lexer l = Lexer(input, strlen((char*)input));
     Token exps[] = {
         {TokenT::BulkType, std::monostate()},
-        {TokenT::Len, "5"},
+        {TokenT::Len, std::make_shared<std::string>("5")},
         {TokenT::Retcar, std::monostate()},
         {TokenT::NewL, std::monostate()},
-        {TokenT::Bulk, "vince"},
+        {TokenT::Bulk, std::make_shared<std::string>("vince")},
         {TokenT::Retcar, std::monostate()},
         {TokenT::NewL, std::monostate()},
         {TokenT::Eof, std::monostate()},
@@ -25,10 +25,10 @@ TEST(Lexer, BulkStrings) {
         Token got = l.next_token();
         EXPECT_EQ(exp.type, got.type);
         if ((exp.type == TokenT::Len) || (exp.type == TokenT::Bulk)) {
-            EXPECT_EQ(std::holds_alternative<std::string>(exp.literal), true);
-            std::string exp_val = std::get<std::string>(exp.literal);
-            std::string got_val = std::get<std::string>(got.literal);
-            EXPECT_EQ(exp_val, got_val);
+            EXPECT_EQ(std::holds_alternative<std::shared_ptr<std::string>>(exp.literal), true);
+            std::shared_ptr<std::string> exp_val = std::get<std::shared_ptr<std::string>>(exp.literal);
+            std::shared_ptr<std::string> got_val = std::get<std::shared_ptr<std::string>>(got.literal);
+            EXPECT_EQ(*exp_val, *got_val);
         } else {
             EXPECT_EQ(std::holds_alternative<std::monostate>(exp.literal),
                       true);
@@ -41,14 +41,14 @@ TEST(Lexer, Arrays) {
     Lexer l = Lexer(input, strlen((char*)input));
     Token exps[] = {
         {TokenT::ArrayType, std::monostate()},
-        {TokenT::Len, "1"},
+        {TokenT::Len, std::make_shared<std::string>("1")},
         {TokenT::Retcar, std::monostate()},
         {TokenT::NewL, std::monostate()},
         {TokenT::BulkType, std::monostate()},
-        {TokenT::Len, "5"},
+        {TokenT::Len, std::make_shared<std::string>("5")},
         {TokenT::Retcar, std::monostate()},
         {TokenT::NewL, std::monostate()},
-        {TokenT::Bulk, "vince"},
+        {TokenT::Bulk, std::make_shared<std::string>("vince")},
         {TokenT::Retcar, std::monostate()},
         {TokenT::NewL, std::monostate()},
         {TokenT::Eof, std::monostate()},
@@ -60,10 +60,10 @@ TEST(Lexer, Arrays) {
         Token got = l.next_token();
         EXPECT_EQ(exp.type, got.type);
         if ((exp.type == TokenT::Len) || (exp.type == TokenT::Bulk)) {
-            EXPECT_EQ(std::holds_alternative<std::string>(exp.literal), true);
-            std::string exp_val = std::get<std::string>(exp.literal);
-            std::string got_val = std::get<std::string>(got.literal);
-            EXPECT_EQ(exp_val, got_val);
+            EXPECT_EQ(std::holds_alternative<std::shared_ptr<std::string>>(exp.literal), true);
+            std::shared_ptr<std::string> exp_val = std::get<std::shared_ptr<std::string>>(exp.literal);
+            std::shared_ptr<std::string> got_val = std::get<std::shared_ptr<std::string>>(got.literal);
+            EXPECT_EQ(*exp_val, *got_val);
         } else {
             EXPECT_EQ(std::holds_alternative<std::monostate>(exp.literal),
                       true);
@@ -75,7 +75,7 @@ TEST(Lexer, SimpleStrings) {
     std::uint8_t* input = (std::uint8_t*)"+PONG\r\n";
     Lexer l = Lexer(input, strlen((char*)input));
     Token exps[] = {
-        {TokenT::Simple, "PONG"},
+        {TokenT::Simple, std::make_shared<std::string>("PONG")},
         {TokenT::Retcar, std::monostate()},
         {TokenT::NewL, std::monostate()},
         {TokenT::Eof, std::monostate()},
@@ -87,10 +87,10 @@ TEST(Lexer, SimpleStrings) {
         Token got = l.next_token();
         EXPECT_EQ(exp.type, got.type);
         if (exp.type == TokenT::Simple) {
-            EXPECT_EQ(std::holds_alternative<std::string>(exp.literal), true);
-            std::string exp_val = std::get<std::string>(exp.literal);
-            std::string got_val = std::get<std::string>(got.literal);
-            EXPECT_EQ(exp_val, got_val);
+            EXPECT_EQ(std::holds_alternative<std::shared_ptr<std::string>>(exp.literal), true);
+            std::shared_ptr<std::string> exp_val = std::get<std::shared_ptr<std::string>>(exp.literal);
+            std::shared_ptr<std::string> got_val = std::get<std::shared_ptr<std::string>>(got.literal);
+            EXPECT_EQ(*exp_val, *got_val);
         } else {
             EXPECT_EQ(std::holds_alternative<std::monostate>(exp.literal),
                       true);
@@ -151,7 +151,7 @@ TEST(Lexer, Integers) {
 TEST(Lexer, Errors) {
     std::uint8_t* input = (std::uint8_t*)"-Error\r\n";
     Token exps[] = {
-        {TokenT::Err, "Error"},
+        {TokenT::Err, std::make_shared<std::string>("Error")},
         {TokenT::Retcar, std::monostate()},
         {TokenT::NewL, std::monostate()},
         {TokenT::Eof, std::monostate()},
@@ -163,12 +163,12 @@ TEST(Lexer, Errors) {
         Token got = l.next_token();
         EXPECT_EQ(exp.type, got.type);
         if (exp.type == TokenT::Err) {
-            std::string exp_err;
-            std::string got_err;
-            EXPECT_EQ(std::holds_alternative<std::string>(got.literal), true);
-            exp_err = std::get<std::string>(exp.literal);
-            got_err = std::get<std::string>(got.literal);
-            EXPECT_EQ(exp_err, got_err);
+            std::shared_ptr<std::string> exp_err;
+            std::shared_ptr<std::string> got_err;
+            EXPECT_EQ(std::holds_alternative<std::shared_ptr<std::string>>(got.literal), true);
+            exp_err = std::get<std::shared_ptr<std::string>>(exp.literal);
+            got_err = std::get<std::shared_ptr<std::string>>(got.literal);
+            EXPECT_EQ(*exp_err, *got_err);
         }
     }
 }

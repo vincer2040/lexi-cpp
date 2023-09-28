@@ -25,7 +25,7 @@ Token Lexer::next_token(void) {
         std::string simple;
         this->read_char();
         simple = this->read_string();
-        tok.literal = simple;
+        tok.literal = std::make_shared<std::string>(simple);
         tok.type = TokenT::Simple;
         return tok;
     }
@@ -42,7 +42,7 @@ Token Lexer::next_token(void) {
         this->read_char();
         s = this->read_string();
         tok.type = TokenT::Err;
-        tok.literal = s;
+        tok.literal = std::make_shared<std::string>(s);
         return tok;
     }
     case '\r':
@@ -56,12 +56,12 @@ Token Lexer::next_token(void) {
     default:
         if (is_letter(this->ch)) {
             std::string value = this->read_string();
-            tok.literal = value;
+            tok.literal = std::make_shared<std::string>(value);
             tok.type = TokenT::Bulk;
             return tok;
         } else if (is_digit(this->ch)) {
             std::string len = this->read_len();
-            tok.literal = len;
+            tok.literal = std::make_shared<std::string>(len);
             tok.type = TokenT::Len;
             return tok;
         } else {

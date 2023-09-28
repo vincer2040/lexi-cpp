@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 #include <string>
 #include <variant>
 #include <vector>
@@ -21,5 +22,7 @@ enum class TokenT {
 
 struct Token {
     TokenT type;
-    std::variant<std::monostate, std::string, std::vector<std::uint8_t>> literal;
+    std::variant<std::monostate, std::shared_ptr<std::string>,
+                 std::vector<std::uint8_t>>
+        literal;
 };

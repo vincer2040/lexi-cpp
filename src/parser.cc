@@ -24,7 +24,8 @@ LexiType Parser::parse() {
         if (!this->expect_peek(TokenT::Bulk)) {
             return res;
         }
-        std::string s = std::get<std::string>(cur.literal);
+        std::shared_ptr<std::string> s =
+            std::get<std::shared_ptr<std::string>>(cur.literal);
         if (!this->expect_peek(TokenT::Retcar)) {
             return res;
         }
@@ -65,8 +66,9 @@ LexiType Parser::parse() {
         if (!this->expect_peek(TokenT::Len)) {
             return res;
         }
-        std::string s_len = std::get<std::string>(this->cur.literal);
-        std::size_t i, len = std::stoull(s_len);
+        std::shared_ptr<std::string> s_len =
+            std::get<std::shared_ptr<std::string>>(this->cur.literal);
+        std::size_t i, len = std::stoull(*s_len);
         if (!this->expect_peek(TokenT::Retcar)) {
             return res;
         }
@@ -88,7 +90,8 @@ LexiType Parser::parse() {
         res.data = data;
     } break;
     case TokenT::Simple: {
-        std::string s = std::get<std::string>(this->cur.literal);
+        std::shared_ptr<std::string> s =
+            std::get<std::shared_ptr<std::string>>(this->cur.literal);
         if (!this->expect_peek(TokenT::Retcar)) {
             return res;
         }

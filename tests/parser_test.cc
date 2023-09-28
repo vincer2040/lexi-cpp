@@ -13,9 +13,11 @@ TEST(Parser, BulkStrings) {
     Parser p = Parser(l);
     LexiType res = p.parse();
     EXPECT_EQ(res.type, LexiTypeT::Bulk);
-    EXPECT_EQ(std::holds_alternative<std::string>(res.data), true);
-    std::string data = std::get<std::string>(res.data);
-    EXPECT_EQ(data, "vince");
+    EXPECT_EQ(std::holds_alternative<std::shared_ptr<std::string>>(res.data),
+              true);
+    std::shared_ptr<std::string> data =
+        std::get<std::shared_ptr<std::string>>(res.data);
+    EXPECT_EQ(*data, "vince");
 }
 
 TEST(Parser, Integers) {
@@ -54,12 +56,16 @@ TEST(Parser, Arrays) {
     EXPECT_EQ(first.type, LexiTypeT::Bulk);
     EXPECT_EQ(second.type, LexiTypeT::Bulk);
 
-    EXPECT_EQ(std::holds_alternative<std::string>(first.data), true);
-    EXPECT_EQ(std::holds_alternative<std::string>(second.data), true);
+    EXPECT_EQ(std::holds_alternative<std::shared_ptr<std::string>>(first.data),
+              true);
+    EXPECT_EQ(std::holds_alternative<std::shared_ptr<std::string>>(second.data),
+              true);
 
-    std::string s1 = std::get<std::string>(first.data);
-    std::string s2 = std::get<std::string>(second.data);
+    std::shared_ptr<std::string> s1 =
+        std::get<std::shared_ptr<std::string>>(first.data);
+    std::shared_ptr<std::string> s2 =
+        std::get<std::shared_ptr<std::string>>(second.data);
 
-    EXPECT_EQ(s1, "vince");
-    EXPECT_EQ(s2, "is cool");
+    EXPECT_EQ(*s1, "vince");
+    EXPECT_EQ(*s2, "is cool");
 }

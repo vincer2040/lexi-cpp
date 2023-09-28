@@ -1,14 +1,17 @@
 #include "../src/lexi.hh"
 #include <iostream>
+#include <memory>
 
 void print(LexiType& res) {
     switch (res.type) {
     case LexiTypeT::Simple: {
-        std::string simple = std::get<std::string>(res.data);
+        std::shared_ptr<std::string> simple =
+            std::get<std::shared_ptr<std::string>>(res.data);
         std::cout << simple << "\n";
     } break;
     case LexiTypeT::Bulk: {
-        std::string bulk = std::get<std::string>(res.data);
+        std::shared_ptr<std::string> bulk =
+            std::get<std::shared_ptr<std::string>>(res.data);
         std::cout << bulk << "\n";
     } break;
     case LexiTypeT::Int: {
