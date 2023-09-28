@@ -7,9 +7,18 @@
 #include <unistd.h>
 
 static std::uint32_t parse_addr(std::string addr_str);
+static std::uint32_t parse_addr(const char* addr_str, std::size_t len);
 
 Socket::Socket(std::string addr_str, std::uint16_t port) {
     this->addr = parse_addr(addr_str);
+    this->port = port;
+    this->read_buf = NULL;
+    this->read_buf_cap = 0;
+    this->fd = socket(AF_INET, SOCK_STREAM, 0);
+}
+
+Socket::Socket(const char* addr_str, std::uint16_t port) {
+    this->addr = parse_addr(addr_str, strlen(addr_str));
     this->port = port;
     this->read_buf = NULL;
     this->read_buf_cap = 0;
@@ -89,6 +98,29 @@ static std::uint32_t parse_addr(std::string addr_str) {
     std::uint32_t addr;
     std::int8_t t;
     std::size_t i, len = addr_str.length();
+    std::uint8_t shift;
+    addr = 0;
+    shift = 24;
+    t = 0;
+    for (i = 0; i < len; i++) {
+        char at;
+        at = addr_str[i];
+        if (at == '.') {
+            addr ^= (((uint32_t)(t)) << shift);
+            t = 0;
+            shift -= 8;
+            continue;
+        }
+        t = (t * 10) + (at - '0');
+    }
+    addr ^= ((uint32_t)(t));
+    return addr;
+}
+
+static std::uint32_t parse_addr(const char* addr_str, std::size_t len) {
+    std::uint32_t addr;
+    std::int8_t t;
+    std::size_t i;
     std::uint8_t shift;
     addr = 0;
     shift = 24;

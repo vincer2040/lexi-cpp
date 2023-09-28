@@ -8,6 +8,7 @@
 class Socket {
   public:
     Socket(std::string addr_str, std::uint16_t port);
+    Socket(const char* addr_str, std::uint16_t port);
     int create_connection(void);
     ssize_t send(std::uint8_t* send_buf, std::size_t send_len);
     std::tuple<std::uint8_t*, ssize_t> receive(void);

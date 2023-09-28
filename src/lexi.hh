@@ -9,6 +9,7 @@
 class Lexi {
   public:
     Lexi(std::string addr_str, std::uint16_t port);
+    Lexi(const char* addr_str, std::uint16_t port);
     int connect(void);
     LexiType ping(void);
     LexiType set(const std::string& key, const std::string& data);

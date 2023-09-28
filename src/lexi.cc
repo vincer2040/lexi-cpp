@@ -7,6 +7,9 @@
 Lexi::Lexi(std::string addr_str, std::uint16_t port)
     : sock(Socket(addr_str, port)) {}
 
+Lexi::Lexi(const char* addr_str, std::uint16_t port)
+    : sock(Socket(addr_str, port)) {}
+
 int Lexi::connect(void) { return this->sock.create_connection(); }
 
 LexiType Lexi::ping(void) {
