@@ -1,6 +1,6 @@
 # lexi-cpp
 
-a client for [lexidb](https://github.com/vincer2040/lexidb), an in memory data structure data base 
+a client for [lexidb](https://github.com/vincer2040/lexidb), an in memory data structure data base
 
 ## Installation
 
@@ -23,9 +23,9 @@ $ git clone git@github.com:vincer2040/lexi-cpp.git
 $ mkdir build && cd build
 ```
 
-3. build it 
+3. build it
 
-from within the build directory: 
+from within the build directory:
 
 ```console
 $ cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -42,7 +42,7 @@ $ make test
 
 5. install
 
-from within the build directory: 
+from within the build directory:
 
 ```console
 $ sudo make install
@@ -50,7 +50,7 @@ $ sudo make install
 
 The default install path is /usr/local/lib
 
-## usage 
+## usage
 
 ```cpp
 #include "lexi.hh"
@@ -74,10 +74,11 @@ int main(void) {
   assert(del_result.type, LexiTypeT::Simple);
   auto deleted = std::get<std::shared_ptr<std::string>>(del_result.data);
   std::cout << *deleted << "\n";  // "OK"
-  
+
   return 0;
 }
 ```
 
 For a more complete example, see examples/main.cc
+
 
