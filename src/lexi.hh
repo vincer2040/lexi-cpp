@@ -19,6 +19,9 @@ class Lexi {
     LexiType push(const std::string& data);
     LexiType push(std::int64_t data);
     LexiType pop(void);
+    LexiType enque(const std::string& data);
+    LexiType enque(std::int64_t data);
+    LexiType deque(void);
     LexiType keys(void);
     LexiType values(void);
     LexiType entries(void);

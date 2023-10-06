@@ -76,6 +76,18 @@ int main() {
     res = lexi.pop();
     print(res);
 
+    res = lexi.enque("vince");
+    print(res);
+
+    res = lexi.enque("is cool");
+    print(res);
+
+    res = lexi.deque();
+    print(res);
+
+    res = lexi.deque();
+    print(res);
+
     res = lexi.cluster_new("fam");
     print(res);
 

@@ -242,6 +242,91 @@ LexiType Lexi::pop(void) {
     return this->parse(read_buf, read_len);
 }
 
+LexiType Lexi::enque(const std::string& data) {
+    std::uint8_t* buf;
+    std::size_t buf_len;
+    ssize_t send_res;
+    std::tuple<std::uint8_t*, ssize_t> read_res;
+    std::uint8_t* read_buf;
+    ssize_t read_len;
+    this->builder.reset();
+    this->builder.add_arr(2);
+    this->builder.add_string("ENQUE");
+    this->builder.add_string(data);
+    buf = this->builder.out();
+    buf_len = this->builder.length();
+    send_res = this->sock.send(buf, buf_len);
+    if (send_res == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    read_res = this->sock.receive();
+    read_buf = std::get<0>(read_res);
+    read_len = std::get<1>(read_res);
+    if (read_buf == nullptr) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    if (read_len == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    return this->parse(read_buf, read_len);
+}
+
+LexiType Lexi::enque(int64_t data) {
+    std::uint8_t* buf;
+    std::size_t buf_len;
+    ssize_t send_res;
+    std::tuple<std::uint8_t*, ssize_t> read_res;
+    std::uint8_t* read_buf;
+    ssize_t read_len;
+    this->builder.reset();
+    this->builder.add_arr(2);
+    this->builder.add_string("ENQUE");
+    this->builder.add_int(data);
+    buf = this->builder.out();
+    buf_len = this->builder.length();
+    send_res = this->sock.send(buf, buf_len);
+    if (send_res == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    read_res = this->sock.receive();
+    read_buf = std::get<0>(read_res);
+    read_len = std::get<1>(read_res);
+    if (read_buf == nullptr) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    if (read_len == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    return this->parse(read_buf, read_len);
+}
+
+LexiType Lexi::deque() {
+    std::uint8_t* buf;
+    std::size_t buf_len;
+    ssize_t send_res;
+    std::tuple<std::uint8_t*, ssize_t> read_res;
+    std::uint8_t* read_buf;
+    ssize_t read_len;
+    this->builder.reset();
+    this->builder.add_string("DEQUE");
+    buf = this->builder.out();
+    buf_len = this->builder.length();
+    send_res = this->sock.send(buf, buf_len);
+    if (send_res == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    read_res = this->sock.receive();
+    read_buf = std::get<0>(read_res);
+    read_len = std::get<1>(read_res);
+    if (read_buf == nullptr) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    if (read_len == -1) {
+        return {LexiTypeT::Err, std::monostate()};
+    }
+    return this->parse(read_buf, read_len);
+}
+
 LexiType Lexi::keys(void) {
     std::uint8_t* buf;
     std::size_t buf_len;
