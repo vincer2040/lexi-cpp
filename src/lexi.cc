@@ -769,6 +769,10 @@ LexiType Lexi::cluster_drop(const std::string& cluster_name) {
     return this->parse(read_buf, read_len);
 }
 
+Multi Lexi::multi(void) {
+    return Multi(this->builder, this->sock);
+}
+
 LexiType Lexi::parse(std::uint8_t* read_buf, std::size_t read_buf_len) {
     Lexer l(read_buf, read_buf_len);
     Parser p(l);

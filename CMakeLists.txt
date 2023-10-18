@@ -14,7 +14,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Werror -pedantic -fstack-clash-protection -f
 enable_testing()
 add_subdirectory(tests)
 
-add_library(lexi src/lexer.cc src/parser.cc src/builder.cc src/socket.cc src/lexi.cc)
+add_library(lexi src/lexer.cc src/parser.cc src/builder.cc src/multi.cc src/socket.cc src/lexi.cc)
 
 add_executable(example example/main.cc)
 

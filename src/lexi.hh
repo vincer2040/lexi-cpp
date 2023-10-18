@@ -2,6 +2,7 @@
 
 #include "builder.hh"
 #include "lexitype.hh"
+#include "multi.hh"
 #include "socket.hh"
 #include <cstdint>
 #include <string>
@@ -42,6 +43,7 @@ class Lexi {
     LexiType cluster_values(const std::string& cluster_name);
     LexiType cluster_entries(const std::string& cluster_name);
     LexiType cluster_drop(const std::string& cluster_name);
+    Multi multi(void);
     ~Lexi(void);
 
   private:
