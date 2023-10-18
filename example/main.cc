@@ -135,5 +135,11 @@ int main() {
 
     res = lexi.cluster_drop("fam");
     print(res);
+
+    res = lexi.multi()
+        .add_set("vince", "is the coolest")
+        .add_get("vince")
+        .run();
+    print(res);
     return 0;
 }
