@@ -2,26 +2,28 @@
 
 #include <cstdint>
 #include <string>
+#include <string_view>
+#include <vector>
 
-class Builder {
-  public:
-    Builder(void);
-    int add_string(const char* str);
-    int add_string(const std::string& str);
-    int add_int(std::int64_t integer);
-    int add_arr(std::size_t len);
-    int add_ping(void);
-    const std::size_t length(void);
-    std::uint8_t* out(void);
-    void reset(void);
-    void free_buf(void);
-
-  private:
-    std::size_t ins;
-    std::size_t cap;
-    void inline add_byte(std::uint8_t byte);
-    void inline add_end(void);
-    void inline add_len(std::string len);
-    int realloc_buf(std::size_t needed);
-    std::uint8_t* buf;
+namespace lexi {
+struct builder_out {
+    uint8_t* data;
+    size_t len;
 };
+
+class builder {
+  public:
+    builder();
+    builder_out out();
+    builder add_ping();
+    builder add_array(size_t len);
+    builder add_string(const char* str, size_t str_len);
+    builder add_string(const std::string& str);
+    builder add_string(std::string_view& str);
+    builder add_int(int64_t integer);
+  private:
+    std::vector<uint8_t> buf;
+    void add_len(size_t len);
+    void add_end();
+};
+} // namespace lexi
