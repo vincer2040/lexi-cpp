@@ -21,6 +21,7 @@ class builder {
     builder add_string(const std::string& str);
     builder add_string(std::string_view& str);
     builder add_int(int64_t integer);
+    builder reset();
   private:
     std::vector<uint8_t> buf;
     void add_len(size_t len);

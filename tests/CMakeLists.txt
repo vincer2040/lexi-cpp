@@ -7,9 +7,10 @@ FetchContent_Declare(
 
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
+
 add_executable(
-   lexer_test
-   lexer_test.cc
+    builder_test
+    builder_test.cc
 )
 
 add_executable(
@@ -18,17 +19,18 @@ add_executable(
 )
 
 target_link_libraries(
-    lexer_test
+    builder_test
     GTest::gtest_main
-    lexi
+    builder
 )
 
 target_link_libraries(
     parser_test
     GTest::gtest_main
-    lexi
+    parser
+    builder
 )
 
 include(GoogleTest)
-gtest_discover_tests(lexer_test)
+gtest_discover_tests(builder_test)
 gtest_discover_tests(parser_test)

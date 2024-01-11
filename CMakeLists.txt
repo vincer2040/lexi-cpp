@@ -14,12 +14,27 @@ set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Werror -pedantic -fstack-clash-protection -f
 enable_testing()
 add_subdirectory(tests)
 
-add_library(lexi src/lexer.cc src/parser.cc src/builder.cc src/multi.cc src/socket.cc src/lexi.cc)
+add_library(
+    builder
+    src/builder.cc
+)
 
-add_executable(example example/main.cc)
+add_library(
+    parser
+    src/parser.cc
+)
 
-target_link_libraries(example lexi)
+add_library(
+    lexi
+    src/lexi.cc
+)
 
-install(FILES build/liblexi.a DESTINATION "${INSTALL_PREFIX}/lib")
-install(FILES src/lexi.h DESTINATION "${INSTALL_PREFIX}/include")
+target_link_libraries(
+    lexi
+    builder
+    parser
+)
+
+# install(FILES build/liblexi.a DESTINATION "${INSTALL_PREFIX}/lib")
+# install(FILES src/lexi.h DESTINATION "${INSTALL_PREFIX}/include")
 

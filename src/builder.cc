@@ -67,6 +67,11 @@ builder builder::add_int(int64_t integer) {
     return *this;
 }
 
+builder builder::reset() {
+    this->buf.clear();
+    return *this;
+}
+
 void builder::add_len(size_t len) {
     std::string len_string = std::to_string(len);
     for (auto ch : len_string) {
