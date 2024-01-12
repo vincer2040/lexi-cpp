@@ -19,22 +19,6 @@ add_library(
     src/builder.cc
 )
 
-add_library(
-    parser
-    src/parser.cc
-)
-
-add_library(
-    lexi
-    src/lexi.cc
-)
-
-target_link_libraries(
-    lexi
-    builder
-    parser
-)
-
 # install(FILES build/liblexi.a DESTINATION "${INSTALL_PREFIX}/lib")
 # install(FILES src/lexi.h DESTINATION "${INSTALL_PREFIX}/include")
 
