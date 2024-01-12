@@ -19,6 +19,44 @@ add_library(
     src/builder.cc
 )
 
+add_library(
+    parser
+    src/parser.cc
+)
+
+add_library(
+    lexi_data
+    src/lexi_data.cc
+)
+
+add_library(
+    lexi
+    src/lexi.cc
+)
+
+add_library(
+    networking
+    src/networking.cc
+)
+
+add_executable(
+    example
+    example/main.cc
+)
+
+target_link_libraries(
+    lexi
+    builder
+    networking
+    parser
+    lexi_data
+)
+
+target_link_libraries(
+    example
+    lexi
+)
+
 # install(FILES build/liblexi.a DESTINATION "${INSTALL_PREFIX}/lib")
 # install(FILES src/lexi.h DESTINATION "${INSTALL_PREFIX}/include")
 
