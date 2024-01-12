@@ -10,10 +10,15 @@ namespace lexi {
 class client {
   public:
     client(const char* addr, uint16_t port);
+    ~client();
     void connect();
     lexi_data authenticate(const std::string& username,
                            const std::string& password);
 
+    lexi_data set(const std::string& key, const std::string& value);
+    lexi_data set(const std::string& key, int64_t value);
+    lexi_data get(const std::string& key);
+    lexi_data del(const std::string& key);
   private:
     int sfd;
     uint32_t addr;

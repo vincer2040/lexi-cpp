@@ -19,6 +19,8 @@ client::client(const char* addr, uint16_t port)
     this->read_buf.resize(4096);
 }
 
+client::~client() { close(this->sfd); }
+
 void client::connect() {
     int c = tcp_connect(this->sfd, this->addr, this->port);
     if (c == -1) {
@@ -35,6 +37,80 @@ lexi_data client::authenticate(const std::string& username,
             password);
     std::vector<uint8_t>& buf = x.out();
     ssize_t w = this->write_to_db(buf);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::set(const std::string& key, const std::string& value) {
+    builder b;
+    builder& x =
+        b.add_arr(3).add_string("SET", 3).add_string(key).add_string(value);
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::set(const std::string& key, int64_t value) {
+    builder b;
+    builder& x =
+        b.add_arr(3).add_string("SET", 3).add_string(key).add_int(value);
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::get(const std::string& key) {
+    builder b;
+    builder& x = b.add_arr(2).add_string("GET", 3).add_string(key);
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::del(const std::string& key) {
+    builder b;
+    builder& x = b.add_arr(2).add_string("DEL", 3).add_string(key);
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
     if (w == -1) {
         std::string err = this->get_error("failed to write");
         throw std::runtime_error(err);
