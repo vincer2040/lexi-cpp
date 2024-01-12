@@ -92,7 +92,7 @@ lexi_data parser::parse_int() {
     int64_t res;
     this->read_byte();
     uint8_t i, shift = 56;
-    for (i = 0; i < 8; ++i) {
+    for (i = 0; i < 8; ++i, shift -= 8) {
         tmp |= (uint64_t)(((uint64_t)this->byte) << shift);
         this->read_byte();
     }
