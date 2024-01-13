@@ -57,6 +57,6 @@ target_link_libraries(
     lexi
 )
 
-# install(FILES build/liblexi.a DESTINATION "${INSTALL_PREFIX}/lib")
-# install(FILES src/lexi.h DESTINATION "${INSTALL_PREFIX}/include")
+install(FILES build/liblexi.a DESTINATION "${INSTALL_PREFIX}/lib")
+install(FILES src/lexi.h DESTINATION "${INSTALL_PREFIX}/include")
 
