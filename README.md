@@ -54,27 +54,27 @@ The default install path is /usr/local/lib
 
 ```cpp
 #include "lexi.hh"
-#include <assert.h>
 #include <iostream>
 
 int main(void) {
-  Lexi client("127.0.0.1", <port>);
+  lexi::client client("<address>", "<port>");
   client.connect();
-  LexiType set_result = client.set("key", "value");
-  assert(set_result.type, LexiTypeT::Simple);
-  auto res = std::get<std::shared_ptr<std::string>>(set_result.data);
-  std::cout << *res << "\n";  // "OK"
+  client.authenticate("<username>", "<password>");
 
-  LexiType get_result = client.get("key");
-  assert(get_result.type, LexiTypeT::Bulk);
-  auto value = std::get<std::shared_ptr<std::string>>(get_result.data);
-  std::cout << *value << "\n"; // "value"
+  lexi::lexi_data set = client.set("key", "value");
+  std::cout << set << '\n'; // ok
 
-  LexiType del_result = client.del("key");
-  assert(del_result.type, LexiTypeT::Simple);
-  auto deleted = std::get<std::shared_ptr<std::string>>(del_result.data);
-  std::cout << *deleted << "\n";  // "OK"
+  lexi::lexi_data get = client.get("key");
+  std::cout << get << '\n'; // "value"
 
+  lexi::lexi_data del = client.del("key");
+  std::cout << del << '\n'; // ok
+
+  lexi::lexi_data set_int = client.set("key", 1337);
+  std::cout << set_int << '\n'; // ok
+
+  lexi::lexi_data get_int = client.get("key");
+  std::cout << get_int << '\n'; // (int) 1337
   return 0;
 }
 ```
