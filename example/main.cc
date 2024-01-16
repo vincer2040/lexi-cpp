@@ -16,7 +16,7 @@ int main() {
     lexi::lexi_data set = c.set("foo", "bar");
     std::cout << set << '\n';
 
-    lexi::lexi_data set_int = c.set("baz", 1337);
+    lexi::lexi_data set_int = c.set("baz", (int64_t)1337);
     std::cout << set_int << '\n';
 
     lexi::lexi_data get = c.get("foo");
