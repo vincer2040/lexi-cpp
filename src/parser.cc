@@ -90,18 +90,12 @@ lexi_data parser::parse_string() {
 }
 
 lexi_data parser::parse_int() {
-    uint64_t tmp = 0;
-    int64_t res;
+    int64_t res = 0;
+    std::string num_string;
     this->read_byte();
-    uint8_t i, shift = 56;
-    for (i = 0; i < 8; ++i, shift -= 8) {
-        tmp |= (uint64_t)(((uint64_t)this->byte) << shift);
+    while (this->byte != '\r' && this->byte != 0) {
+        num_string.push_back(this->byte);
         this->read_byte();
-    }
-    if (tmp <= 0x7fffffffffffffffu) {
-        res = tmp;
-    } else {
-        res = -1 - (int64_t)(0xffffffffffffffffu - tmp);
     }
     if (!this->cur_byte_is('\r')) {
         return invalid_data;
@@ -110,6 +104,7 @@ lexi_data parser::parse_int() {
         return invalid_data;
     }
     this->read_byte();
+    res = std::stold(num_string);
     return {lexi_data_type::Int, res};
 }
 

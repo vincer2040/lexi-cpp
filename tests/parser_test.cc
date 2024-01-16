@@ -7,6 +7,11 @@ struct string_test {
     const char* exp;
 };
 
+struct int_test {
+    std::vector<uint8_t> input;
+    int64_t exp;
+};
+
 #define arr_size(arr) sizeof arr / sizeof arr[0]
 
 TEST(Parser, ParseStrings) {
@@ -55,5 +60,27 @@ TEST(Parser, ParseArrays) {
         EXPECT_EQ(cur.type, lexi::lexi_data_type::String);
         auto s = std::get<std::string>(cur.data);
         EXPECT_STREQ(exp, s.c_str());
+    }
+}
+
+TEST(Parser, ParseIntegers) {
+    int_test tests[] = {
+        {
+            {':', '1', '3', '3', '7', '\r', '\n'},
+            1337,
+        },
+        {
+            {':', '-', '1', '3', '3', '7', '\r', '\n'},
+            -1337,
+        },
+    };
+    size_t i, len = arr_size(tests);
+    for (i = 0; i < len; ++i) {
+        int_test t = tests[i];
+        lexi::parser p(t.input, t.input.size());
+        lexi::lexi_data parsed = p.parse();
+        EXPECT_EQ(parsed.type, lexi::lexi_data_type::Int);
+        auto got = std::get<int64_t>(parsed.data);
+        EXPECT_EQ(got, t.exp);
     }
 }

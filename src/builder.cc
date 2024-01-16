@@ -57,10 +57,9 @@ builder& builder::add_arr(size_t len) {
 
 builder& builder::add_int(int64_t integer) {
     this->buf.push_back(':');
-    uint8_t i, shift = 56;
-    for (i = 0; i < 8; ++i, shift -= 8) {
-        uint8_t byte = integer >> shift;
-        this->buf.push_back(byte);
+    std::string s = std::to_string(integer);
+    for (auto ch : s) {
+        this->buf.push_back(ch);
     }
     this->add_end();
     return *this;
