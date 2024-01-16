@@ -21,6 +21,7 @@ class parser {
     lexi_data parse_simple();
     lexi_data parse_string();
     lexi_data parse_int();
+    lexi_data parse_double();
     lexi_data parse_array();
     lexi_data parse_error();
 

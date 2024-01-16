@@ -1,7 +1,7 @@
 #include "parser.hh"
-#include <cctype>
 #include <cstring>
 #include <optional>
+#include <string>
 
 namespace lexi {
 
@@ -36,6 +36,8 @@ lexi_data parser::parse_data() {
         return this->parse_string();
     case ':':
         return this->parse_int();
+    case ',':
+        return this->parse_double();
     case '*':
         return this->parse_array();
     case '-':
@@ -109,6 +111,24 @@ lexi_data parser::parse_int() {
     }
     this->read_byte();
     return {lexi_data_type::Int, res};
+}
+
+lexi_data parser::parse_double() {
+    this->read_byte();
+    std::string dbl_string;
+    double res = 0;
+    while (this->byte != '\r' && this->byte != 0) {
+        dbl_string += this->byte;
+    }
+    if (!this->cur_byte_is('\r')) {
+        return invalid_data;
+    }
+    if (!this->expect_peek('\n')) {
+        return invalid_data;
+    }
+    res = std::stod(dbl_string);
+    this->read_byte();
+    return {lexi_data_type::Double, res};
 }
 
 lexi_data parser::parse_array() {

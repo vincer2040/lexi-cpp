@@ -11,6 +11,7 @@ enum class lexi_data_type {
     Simple,
     String,
     Int,
+    Double,
     Array,
     Error,
 };
@@ -22,11 +23,12 @@ enum class simple_string {
 };
 
 using lexi_data_t = std::variant<std::monostate, simple_string, std::string,
-                                 int64_t, std::vector<struct lexi_data>>;
+                                 int64_t, double, std::vector<struct lexi_data>>;
 
 struct lexi_data {
     lexi_data_type type;
     lexi_data_t data;
+    bool operator==(lexi_data& d);
 };
 
 std::ostream& operator<<(std::ostream& stream, lexi_data& data);
