@@ -22,8 +22,9 @@ enum class simple_string {
     Pong,
 };
 
-using lexi_data_t = std::variant<std::monostate, simple_string, std::string,
-                                 int64_t, double, std::vector<struct lexi_data>>;
+using lexi_data_t =
+    std::variant<std::monostate, simple_string, std::string, int64_t, double,
+                 std::vector<struct lexi_data>>;
 
 struct lexi_data {
     lexi_data_type type;
