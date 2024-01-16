@@ -66,6 +66,16 @@ builder& builder::add_int(int64_t integer) {
     return *this;
 }
 
+builder& builder::add_double(double dbl) {
+    this->buf.push_back(',');
+    std::string dbl_string = std::to_string(dbl);
+    for (auto ch : dbl_string) {
+        this->buf.push_back(ch);
+    }
+    this->add_end();
+    return *this;
+}
+
 void builder::add_len(size_t len) {
     std::string len_string = std::to_string(len);
     for (auto ch : len_string) {

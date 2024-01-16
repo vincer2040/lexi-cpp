@@ -17,6 +17,7 @@ class builder {
     builder& add_string(std::string_view& str);
     builder& add_arr(size_t len);
     builder& add_int(int64_t integer);
+    builder& add_double(double dbl);
 
   private:
     std::vector<uint8_t> buf;
