@@ -32,7 +32,7 @@ void client::connect() {
 lexi_data client::authenticate(const std::string& username,
                                const std::string& password) {
     // clang-format off
-    builder& x = b
+    builder& x = this->b
         .reset()
         .add_arr(3)
         .add_string("AUTH", 4)
@@ -56,7 +56,7 @@ lexi_data client::authenticate(const std::string& username,
 
 lexi_data client::set(const std::string& key, const std::string& value) {
     // clang-format off
-    builder& x = b
+    builder& x = this->b
         .reset()
         .add_arr(3)
         .add_string("SET", 3)
@@ -80,7 +80,7 @@ lexi_data client::set(const std::string& key, const std::string& value) {
 
 lexi_data client::set(const std::string& key, int64_t value) {
     // clang-format off
-    builder& x = b
+    builder& x = this->b
         .reset()
         .add_arr(3)
         .add_string("SET", 3)
@@ -104,7 +104,7 @@ lexi_data client::set(const std::string& key, int64_t value) {
 
 lexi_data client::set(const std::string& key, double value) {
     // clang-format off
-    builder& x = b
+    builder& x = this->b
         .reset()
         .add_arr(3)
         .add_string("SET", 3)
@@ -128,7 +128,7 @@ lexi_data client::set(const std::string& key, double value) {
 
 lexi_data client::get(const std::string& key) {
     // clang-format off
-    builder& x = b
+    builder& x = this->b
         .reset()
         .add_arr(2)
         .add_string("GET", 3)
@@ -151,7 +151,7 @@ lexi_data client::get(const std::string& key) {
 
 lexi_data client::del(const std::string& key) {
     // clang-format off
-    builder& x = b
+    builder& x = this->b
         .reset()
         .add_arr(2)
         .add_string("DEL", 3)
