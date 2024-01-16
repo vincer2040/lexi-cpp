@@ -17,6 +17,7 @@ class client {
 
     lexi_data set(const std::string& key, const std::string& value);
     lexi_data set(const std::string& key, int64_t value);
+    lexi_data set(const std::string& key, double value);
     lexi_data get(const std::string& key);
     lexi_data del(const std::string& key);
   private:
