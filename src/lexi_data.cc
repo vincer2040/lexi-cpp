@@ -1,42 +1,55 @@
 #include "lexi_data.hh"
 
 namespace lexi {
-bool lexi_data::operator==(lexi_data& d) {
+bool lexi_data::operator==(const lexi_data& d) {
     bool res = false;
-    if (this->type != d.type) {
+    if (type != d.type) {
         return res;
     }
-    switch (this->type) {
+    switch (type) {
     case lexi_data_type::Invalid:
         res = true;
         break;
     case lexi_data_type::Simple: {
-        auto this_simple = std::get<simple_string>(this->data);
+        auto this_simple = std::get<simple_string>(data);
         auto d_simple = std::get<simple_string>(d.data);
         res = this_simple == d_simple;
     } break;
     case lexi_data_type::String: {
-        auto& this_string = std::get<std::string>(this->data);
+        auto& this_string = std::get<std::string>(data);
         auto& d_string = std::get<std::string>(d.data);
         res = this_string == d_string;
     } break;
     case lexi_data_type::Int: {
-        auto this_int = std::get<int64_t>(this->data);
+        auto this_int = std::get<int64_t>(data);
         auto d_int = std::get<int64_t>(d.data);
         res = this_int == d_int;
     } break;
     case lexi_data_type::Double: {
-        auto this_double = std::get<double>(this->data);
+        auto this_double = std::get<double>(data);
         auto d_double = std::get<double>(d.data);
         res = this_double == d_double;
     } break;
     case lexi_data_type::Array: {
-        auto& this_vec = std::get<std::vector<lexi_data>>(this->data);
+        auto& this_vec = std::get<std::vector<lexi_data>>(data);
         auto& d_vec = std::get<std::vector<lexi_data>>(d.data);
-        res = this_vec == d_vec;
+        if (this_vec.size() != d_vec.size()) {
+            res = false;
+        } else {
+            size_t i, len = this_vec.size();
+            for (i = 0; i < len; ++i) {
+                auto& this_cur = this_vec[i];
+                auto& d_cur = d_vec[i];
+                if (!(this_cur == d_cur)) {
+                    res = false;
+                    return res;
+                }
+            }
+            res = true;
+        }
     } break;
     case lexi_data_type::Error: {
-        auto& this_string = std::get<std::string>(this->data);
+        auto& this_string = std::get<std::string>(data);
         auto& d_string = std::get<std::string>(d.data);
         res = this_string == d_string;
     } break;

@@ -28,7 +28,7 @@ using lexi_data_t = std::variant<std::monostate, simple_string, std::string,
 struct lexi_data {
     lexi_data_type type;
     lexi_data_t data;
-    bool operator==(lexi_data& d);
+    bool operator==(const lexi_data& d);
 };
 
 std::ostream& operator<<(std::ostream& stream, lexi_data& data);
