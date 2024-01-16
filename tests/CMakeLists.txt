@@ -13,11 +13,22 @@ add_executable(
     builder_test.cc
 )
 
+add_executable(
+    parser_test
+    parser_test.cc
+)
+
 target_link_libraries(
     builder_test
     GTest::gtest_main
     builder
 )
 
+target_link_libraries(
+    parser_test
+    GTest::gtest_main
+    parser
+)
+
 include(GoogleTest)
-gtest_discover_tests(builder_test)
+gtest_discover_tests(parser_test)
