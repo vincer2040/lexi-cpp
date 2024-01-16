@@ -9,7 +9,7 @@
 
 namespace lexi {
 client::client(const char* addr, uint16_t port)
-    : sfd(-1), addr(parse_addr(addr)), port(port),
+    : sfd(-1), addr(parse_addr(addr)), port(port), b(builder()),
       read_buf(std::vector<uint8_t>()) {
     this->sfd = create_tcp_socket(0);
     if (this->sfd == -1) {
@@ -31,10 +31,14 @@ void client::connect() {
 
 lexi_data client::authenticate(const std::string& username,
                                const std::string& password) {
-    builder b;
-    builder& x =
-        b.add_arr(3).add_string("AUTH", 4).add_string(username).add_string(
-            password);
+    // clang-format off
+    builder& x = b
+        .reset()
+        .add_arr(3)
+        .add_string("AUTH", 4)
+        .add_string(username)
+        .add_string(password);
+    // clang-format on
     std::vector<uint8_t>& buf = x.out();
     ssize_t w = this->write_to_db(buf);
     if (w == -1) {
@@ -51,9 +55,14 @@ lexi_data client::authenticate(const std::string& username,
 }
 
 lexi_data client::set(const std::string& key, const std::string& value) {
-    builder b;
-    builder& x =
-        b.add_arr(3).add_string("SET", 3).add_string(key).add_string(value);
+    // clang-format off
+    builder& x = b
+        .reset()
+        .add_arr(3)
+        .add_string("SET", 3)
+        .add_string(key)
+        .add_string(value);
+    // clang-format on
     std::vector<uint8_t>& out = x.out();
     ssize_t w = this->write_to_db(out);
     if (w == -1) {
@@ -70,9 +79,14 @@ lexi_data client::set(const std::string& key, const std::string& value) {
 }
 
 lexi_data client::set(const std::string& key, int64_t value) {
-    builder b;
-    builder& x =
-        b.add_arr(3).add_string("SET", 3).add_string(key).add_int(value);
+    // clang-format off
+    builder& x = b
+        .reset()
+        .add_arr(3)
+        .add_string("SET", 3)
+        .add_string(key)
+        .add_int(value);
+    // clang-format on
     std::vector<uint8_t>& out = x.out();
     ssize_t w = this->write_to_db(out);
     if (w == -1) {
@@ -89,9 +103,14 @@ lexi_data client::set(const std::string& key, int64_t value) {
 }
 
 lexi_data client::set(const std::string& key, double value) {
-    builder b;
-    builder& x =
-        b.add_arr(3).add_string("SET", 3).add_string(key).add_double(value);
+    // clang-format off
+    builder& x = b
+        .reset()
+        .add_arr(3)
+        .add_string("SET", 3)
+        .add_string(key)
+        .add_double(value);
+    // clang-format on
     std::vector<uint8_t>& out = x.out();
     ssize_t w = this->write_to_db(out);
     if (w == -1) {
@@ -108,8 +127,13 @@ lexi_data client::set(const std::string& key, double value) {
 }
 
 lexi_data client::get(const std::string& key) {
-    builder b;
-    builder& x = b.add_arr(2).add_string("GET", 3).add_string(key);
+    // clang-format off
+    builder& x = b
+        .reset()
+        .add_arr(2)
+        .add_string("GET", 3)
+        .add_string(key);
+    // clang-format on
     std::vector<uint8_t>& out = x.out();
     ssize_t w = this->write_to_db(out);
     if (w == -1) {
@@ -126,8 +150,13 @@ lexi_data client::get(const std::string& key) {
 }
 
 lexi_data client::del(const std::string& key) {
-    builder b;
-    builder& x = b.add_arr(2).add_string("DEL", 3).add_string(key);
+    // clang-format off
+    builder& x = b
+        .reset()
+        .add_arr(2)
+        .add_string("DEL", 3)
+        .add_string(key);
+    // clang-format on
     std::vector<uint8_t>& out = x.out();
     ssize_t w = this->write_to_db(out);
     if (w == -1) {

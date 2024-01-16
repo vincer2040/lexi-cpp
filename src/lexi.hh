@@ -1,5 +1,6 @@
 #pragma once
 
+#include "builder.hh"
 #include "lexi_data.hh"
 #include <cstdint>
 #include <string>
@@ -20,10 +21,12 @@ class client {
     lexi_data set(const std::string& key, double value);
     lexi_data get(const std::string& key);
     lexi_data del(const std::string& key);
+
   private:
     int sfd;
     uint32_t addr;
     uint16_t port;
+    builder b;
     std::vector<uint8_t> read_buf;
 
     lexi_data parse(size_t len);
