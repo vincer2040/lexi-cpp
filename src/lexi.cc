@@ -338,6 +338,119 @@ lexi_data client::del(std::string_view key) {
     return parsed;
 }
 
+lexi_data client::push(const std::string& value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("PUSH", 4)
+        .add_string(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::push(std::string_view value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("PUSH", 4)
+        .add_string(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::push(int64_t value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("PUSH", 4)
+        .add_int(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::push(double value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("PUSH", 4)
+        .add_double(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::pop() {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_string("POP", 3);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
 lexi_data client::parse(size_t len) {
     parser p(this->read_buf, len);
     return p.parse();

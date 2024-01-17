@@ -27,5 +27,11 @@ int main() {
 
     lexi::lexi_data del = c.del(std::string("foo"));
     std::cout << del << '\n';
+
+    lexi::lexi_data push = c.push(std::string("foo"));
+    std::cout << push << '\n';
+
+    lexi::lexi_data pop = c.pop();
+    std::cout << pop << '\n';
     return 0;
 }

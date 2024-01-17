@@ -32,6 +32,13 @@ class client {
     lexi_data del(const std::string& key);
     lexi_data del(std::string_view key);
 
+    lexi_data push(const std::string& value);
+    lexi_data push(std::string_view value);
+    lexi_data push(int64_t value);
+    lexi_data push(double value);
+
+    lexi_data pop();
+
   private:
     int sfd;
     uint32_t addr;
