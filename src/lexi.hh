@@ -46,6 +46,21 @@ class client {
 
     lexi_data deque();
 
+    lexi_data zset(const std::string& value);
+    lexi_data zset(std::string_view value);
+    lexi_data zset(int64_t value);
+    lexi_data zset(double value);
+
+    lexi_data zhas(const std::string& value);
+    lexi_data zhas(std::string_view value);
+    lexi_data zhas(int64_t value);
+    lexi_data zhas(double value);
+
+    lexi_data zdel(const std::string& value);
+    lexi_data zdel(std::string_view value);
+    lexi_data zdel(int64_t value);
+    lexi_data zdel(double value);
+
   private:
     int sfd;
     uint32_t addr;

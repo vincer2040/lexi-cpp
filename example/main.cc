@@ -39,5 +39,15 @@ int main() {
 
     lexi::lexi_data deque = c.deque();
     std::cout << deque << '\n';
+
+    lexi::lexi_data zset = c.zset(std::string("foo"));
+    std::cout << zset << '\n';
+
+    lexi::lexi_data zhas = c.zhas(std::string("foo"));
+    std::cout << zhas << '\n';
+
+    lexi::lexi_data zdel = c.zdel(std::string("foo"));
+    std::cout << zdel << '\n';
+
     return 0;
 }

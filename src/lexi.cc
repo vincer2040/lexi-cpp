@@ -564,6 +564,282 @@ lexi_data client::deque() {
     return parsed;
 }
 
+lexi_data client::zset(const std::string& value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZSET", 4)
+        .add_string(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zset(std::string_view value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZSET", 4)
+        .add_string(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zset(int64_t value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZSET", 4)
+        .add_int(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zset(double value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZSET", 4)
+        .add_double(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zhas(const std::string& value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZHAS", 4)
+        .add_string(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zhas(std::string_view value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZHAS", 4)
+        .add_string(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zhas(int64_t value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZHAS", 4)
+        .add_int(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zhas(double value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZHAS", 4)
+        .add_double(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zdel(const std::string& value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZDEL", 4)
+        .add_string(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zdel(std::string_view value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZDEL", 4)
+        .add_string(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zdel(int64_t value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZDEL", 4)
+        .add_int(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
+lexi_data client::zdel(double value) {
+    // clang-format off
+    builder& x = this->b
+        .reset()
+        .add_arr(2)
+        .add_string("ZDEL", 4)
+        .add_double(value);
+    // clang-format on
+    std::vector<uint8_t>& out = x.out();
+    ssize_t w = this->write_to_db(out);
+    if (w == -1) {
+        std::string err = this->get_error("failed to write");
+        throw std::runtime_error(err);
+    }
+    ssize_t r = this->read_from_db();
+    if (r == -1) {
+        std::string err = this->get_error("failed to read");
+        throw std::runtime_error(err);
+    }
+    lexi_data parsed = this->parse(r);
+    return parsed;
+}
+
 lexi_data client::parse(size_t len) {
     parser p(this->read_buf, len);
     return p.parse();
