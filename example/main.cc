@@ -1,6 +1,5 @@
 #include "../src/lexi.hh"
 #include <iostream>
-#include <stdexcept>
 
 int main() {
     lexi::client c("127.0.0.1", 6969);
