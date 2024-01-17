@@ -37,7 +37,7 @@ builder& builder::add_string(const std::string& str) {
     return this->add_string(str.c_str(), str.size());
 }
 
-builder& builder::add_string(std::string_view& str) {
+builder& builder::add_string(std::string_view str) {
     this->buf.push_back('$');
     this->add_len(str.length());
     this->add_end();
