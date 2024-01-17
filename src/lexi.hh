@@ -39,6 +39,13 @@ class client {
 
     lexi_data pop();
 
+    lexi_data enque(const std::string& value);
+    lexi_data enque(std::string_view value);
+    lexi_data enque(int64_t value);
+    lexi_data enque(double value);
+
+    lexi_data deque();
+
   private:
     int sfd;
     uint32_t addr;

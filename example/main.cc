@@ -33,5 +33,11 @@ int main() {
 
     lexi::lexi_data pop = c.pop();
     std::cout << pop << '\n';
+
+    lexi::lexi_data enque = c.enque(std::string("foo"));
+    std::cout << enque << '\n';
+
+    lexi::lexi_data deque = c.deque();
+    std::cout << deque << '\n';
     return 0;
 }
