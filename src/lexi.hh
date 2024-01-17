@@ -4,6 +4,7 @@
 #include "lexi_data.hh"
 #include <cstdint>
 #include <string>
+#include <string_view>
 #include <sys/types.h>
 #include <vector>
 
@@ -17,10 +18,19 @@ class client {
                            const std::string& password);
 
     lexi_data set(const std::string& key, const std::string& value);
+    lexi_data set(const std::string& key, std::string_view value);
     lexi_data set(const std::string& key, int64_t value);
     lexi_data set(const std::string& key, double value);
+    lexi_data set(std::string_view key, const std::string& value);
+    lexi_data set(std::string_view key, std::string_view value);
+    lexi_data set(std::string_view key, int64_t value);
+    lexi_data set(std::string_view key, double value);
+
     lexi_data get(const std::string& key);
+    lexi_data get(std::string_view key);
+
     lexi_data del(const std::string& key);
+    lexi_data del(std::string_view key);
 
   private:
     int sfd;

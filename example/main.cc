@@ -13,19 +13,19 @@ int main() {
     lexi::lexi_data auth_res = c.authenticate("root", "root");
     std::cout << auth_res << '\n';
 
-    lexi::lexi_data set = c.set("foo", "bar");
+    lexi::lexi_data set = c.set(std::string("foo"), std::string("bar"));
     std::cout << set << '\n';
 
-    lexi::lexi_data set_int = c.set("baz", (int64_t)1337);
+    lexi::lexi_data set_int = c.set(std::string("baz"), (int64_t)1337);
     std::cout << set_int << '\n';
 
-    lexi::lexi_data get = c.get("foo");
+    lexi::lexi_data get = c.get(std::string("foo"));
     std::cout << get << '\n';
 
-    lexi::lexi_data get_int = c.get("baz");
+    lexi::lexi_data get_int = c.get(std::string("baz"));
     std::cout << get_int << '\n';
 
-    lexi::lexi_data del = c.del("foo");
+    lexi::lexi_data del = c.del(std::string("foo"));
     std::cout << del << '\n';
     return 0;
 }
